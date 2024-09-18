@@ -1,0 +1,245 @@
+{% extends "Header.html" %}
+
+{% block title %}View Job Sheet{% endblock %}
+
+{% block content %}
+
+<div class="main">
+    <div class="header">
+        <h1>View Job Sheet</h1>
+    </div>
+
+    {% if data %}
+    <div class="job-details">
+        <table>
+            <tr>
+                <th>Client Name</th>
+                <td>{{ data.name }}</td>
+            </tr>
+            <tr>
+                <th>Contact Info</th>
+                <td>{{ data.phoneNo }}</td>
+            </tr>
+            <tr>
+                <th>Receive Date</th>
+                <td>{{ data.receiveDate }}</td>
+            </tr>
+            <tr>
+                <th>Inventory Received</th>
+                <td>{{ data.productName }}</td>
+            </tr>
+            <tr>
+                <th>Inventory Image</th>
+                <td>
+                    {% if data.productimage %}
+                        <img src="{{ data.productimage.url }}" alt="Product Image">
+                    {% else %}
+                        <p>No Image Available</p>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Reported Issue</th>
+                <td>{{ data.reportedIssue }}</td>
+            </tr>
+            <tr>
+                <th>Client Notes</th>
+                <td>{{ data.clientNotes }}</td>
+            </tr>
+            <tr>
+                <th>Assigned Technician</th>
+                <td>{{ data.assignedTechnician }}</td>
+            </tr>
+            <tr>
+                <th>Estimated Amount</th>
+                <td>{{ data.estimatedAmount }}</td>
+            </tr>
+            <tr>
+                <th>Deadline</th>
+                <td>{{ data.deadline }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ data.status }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="notes-form">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="note">Add Notes</label>
+                <textarea class="form-control" id="note" rows="4" placeholder="Add notes..." name="note">{{ data.clientNotes }}</textarea>
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'update-client' id %}" class="btn-edit">Edit</a>
+        <form method="POST" action="{% url 'delete-client' id %}" class="delete-form" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-delete">Delete</button>
+        </form>
+    </div>
+
+    <div class="extra-actions text-center">
+        <a href="{% url 'client-list' %}" class="btn btn-back">Back</a>
+        <a href="{% url 'save-pdf' id %}" class="btn btn-save-pdf">Save as PDF</a>
+    </div>
+
+    {% else %}
+    <p>No data available</p>
+    {% endif %}
+
+</div>
+
+<!-- Styles -->
+<style>
+    .main {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        background-color: #1a1ac0;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .job-details {
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    img {
+        max-width: 200px;
+        height: auto;
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin-top: 10px;
+    }
+
+    .form-group {
+        margin-top: 20px;
+    }
+
+    label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        background-color: #1a1ac0;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-primary:hover {
+        background-color: #333399;
+    }
+
+    .actions {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .btn-edit, .btn-delete {
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 16px;
+        color: white;
+    }
+
+    .btn-edit {
+        background-color: #ffc107;
+    }
+
+    .btn-edit:hover {
+        background-color: #e0a800;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    .extra-actions {
+        margin-top: 20px;
+    }
+
+    .btn-back, .btn-save-pdf {
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 16px;
+        color: white;
+    }
+
+    .btn-back {
+        background-color: #6c757d;
+    }
+
+    .btn-back:hover {
+        background-color: #5a6268;
+    }
+
+    .btn-save-pdf {
+        background-color: #007bff;
+    }
+
+    .btn-save-pdf:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

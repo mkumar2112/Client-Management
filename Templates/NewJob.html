@@ -1,0 +1,153 @@
+{% extends "Header.html" %}
+
+{% block title %}Create New Client{% endblock %}
+
+{% block content %}
+
+<div class="main">
+    <div class="header">
+        <h1>Create New Client</h1>
+    </div>
+
+    {% if form %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'create-client' %}" class="client-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_name">Client Name</label>
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            <label for="id_phoneNo">Contact Info</label>
+            {{ form.phoneNo }}
+        </div>
+        <div class="form-group">
+            <label for="id_receiveDate">Receive Date</label>
+            {{ form.receiveDate }}
+        </div>
+        <div class="form-group">
+            <label for="id_productName">Inventory Received</label>
+            {{ form.productName }}
+        </div>
+        <div class="form-group">
+            <label for="id_productimage">Inventory Image</label>
+            {% if form.productimage.value %}
+                <img src="{{ form.productimage.value.url }}" alt="Product Image" class="product-image">
+            {% endif %}
+            {{ form.productimage }}
+        </div>
+        <div class="form-group">
+            <label for="id_reportedIssue">Reported Issue</label>
+            {{ form.reportedIssue }}
+        </div>
+        <div class="form-group">
+            <label for="id_clientNotes">Client Notes</label>
+            {{ form.clientNotes }}
+        </div>
+        <div class="form-group">
+            <label for="id_assignedTechnician">Assigned Technician</label>
+            {{ form.assignedTechnician }}
+        </div>
+        <div class="form-group">
+            <label for="id_estimatedAmount">Estimated Amount</label>
+            {{ form.estimatedAmount }}
+        </div>
+        <div class="form-group">
+            <label for="id_deadline">Deadline</label>
+            {{ form.deadline }}
+        </div>
+        <div class="form-group">
+            <label for="id_status">Status</label>
+            {{ form.status }}
+        </div>
+        <div class="form-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+
+    {% else %}
+    <p>No form available</p>
+    {% endif %}
+
+</div>
+
+<style>
+    .main {
+        font-family: Arial, sans-serif;
+        padding: 30px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .header {
+        text-align: center;
+        background-color: #1a1ac0;
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 30px;
+    }
+
+    .client-form {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+        width: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: #1a1ac0;
+        outline: none;
+    }
+
+    .form-footer {
+        text-align: right;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        background-color: #1a1ac0;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-primary:hover {
+        background-color: #333399;
+    }
+
+    .product-image {
+        max-width: 200px;
+        height: auto;
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin-top: 10px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+{% endblock %}

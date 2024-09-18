@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Default Title{% endblock %}</title>
+    
+</head>
+<body>
+    <div>
+        <nav class="navbar" >
+            Client Management Dashboard
+          </nav>
+    </div>
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+        margin:0%;
+        background-color: #1a1ac0; /* Violet color for the navbar */
+        height: 20px; /* Set height to 20px */
+        width: 100%; /* Full width */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px; /* Add some padding for spacing */
+        box-sizing: border-box; /* Include padding in height/width calculations */
+        color: white;
+    }
+</style>
+
+</html>

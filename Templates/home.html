@@ -1,0 +1,201 @@
+{% extends "Header.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="main">
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <form method="GET" action="{% url 'client-list' %}">
+            <input type="text" name="search" placeholder="Search by client name" value="{{ request.GET.search }}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="new-job-btn">
+        <a href="{% url 'create-client' %}">+ New Job</a>
+    </div>
+    <!-- Client Data Table -->
+    <div class="table-container">
+        {% if data %}
+        <table>
+            <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Client ID</th>
+                    <th>Client Name</th>
+                    <th>Contact Info</th>
+                    <th>Receive Date</th>
+                    <th>Inventory Received</th>
+                    <th>Reported Issue</th>
+                    <th>Client Notes</th>
+                    <th>Assigned Technician</th>
+                    <th>Estimated Amount</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.phoneNo }}</td>
+                    <td>{{ client.receiveDate }}</td>
+                    <td>{{ client.productName }}</td>
+                    <td>{{ client.reportedIssue }}</td>
+                    <td>{{ client.clientNotes }}</td>
+                    <td>{{ client.assignedTechnician }}</td>
+                    <td>{{ client.estimatedAmount }}</td>
+                    <td>{{ client.deadline }}</td>
+                    <td>{{ client.status }}</td>
+                    <td>
+                        <a href="{% url 'client-detail' client.id %}" class="btn-view">View</a>
+                        <a href="{% url 'update-client' client.id %}" class="btn-edit">Edit</a>
+                        <form method="POST" action="{% url 'delete-client' client.id %}" class="delete-form">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No client data available</p>
+        {% endif %}
+    </div>
+
+    <div class="header">
+        <h1>Traders 2024</h1>
+    </div>
+</div>
+
+<!-- Styles -->
+<style>
+    .header {
+        margin: 10px;
+        font-family: Arial, sans-serif;
+        background-color: #1a1ac0;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+    }
+
+    .main {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        text-align: center; /* Center-align content */
+    }
+
+    .search-bar {
+        margin: 0 auto 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .search-bar form {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-bar input[type="text"] {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .search-bar button {
+        padding: 10px 20px;
+        background-color: #1a1ac0;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .new-job-btn {
+        margin-bottom: 20px;
+    }
+
+    .new-job-btn a {
+        padding: 10px 20px;
+        background-color: #1a1ac0;
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .new-job-btn a:hover, .search-bar button:hover {
+        background-color: #333399;
+    }
+
+    .table-container {
+        margin-top: 20px;
+        overflow-x: auto;
+        text-align: center; /* Center-align table */
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        display: inline-block; /* Center-align table */
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #1a1ac0;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .btn-view, .btn-edit, .btn-delete {
+        padding: 8px 12px;
+        margin: 2px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        display: inline-block;
+    }
+
+    .btn-view {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-edit {
+        background-color: #ffc107;
+        color: white;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+
+    .delete-form {
+        display: inline;
+    }
+</style>
+{% endblock %}
